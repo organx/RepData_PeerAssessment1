@@ -257,17 +257,10 @@ means to substitute the NAs for each day.
 
     png("plot3.png")
     hist(total.daily.steps2)
-    dev.off
+    dev.off()
 
-    ## function (which = dev.cur()) 
-    ## {
-    ##     if (which == 1) 
-    ##         stop("cannot shut down device 1 (the null device)")
-    ##     .External(C_devoff, as.integer(which))
-    ##     dev.cur()
-    ## }
-    ## <bytecode: 0x05b07df0>
-    ## <environment: namespace:grDevices>
+    ## png 
+    ##   2
 
     knitr::include_graphics("./images/plot3.png")
 

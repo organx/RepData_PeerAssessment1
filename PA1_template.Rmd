@@ -150,7 +150,7 @@ total.daily.steps2 <- tapply(raw2$steps, raw2$date, sum)
 ```{r ECHO = TRUE}
 png("plot3.png")
 hist(total.daily.steps2)
-dev.off
+dev.off()
 
 ```
 
