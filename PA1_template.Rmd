@@ -49,11 +49,11 @@ dev.off()
 ```
 
 
-```{r echo = TRUE, fig.cap="Histogram: Total Number of Steps Taken Each Day", out.width='100%'}
-knitr::include_graphics("https://github.com/organx/RepData_PeerAssessment1/blob/master/images/plot1.png")
+```{r echo = TRUE, fig.cap="Histogram: Total Number of Steps Taken Each Day", out.width='62%'}
+knitr::include_graphics("./images/plot1.png")
 
 ```
-! [] (https://github.com/organx/RepData_PeerAssessment1/blob/master/images/plot1.png)
+
 #### Calculate and report the mean and median of the total number of steps taken per day.
 
 Mean and median number of steps taken per day.
@@ -81,11 +81,10 @@ plot(daily.pattern, type = "l")
 dev.off()
 ```
 
-```{r echo = TRUE, fig.cap="Time series plot: Mean of Steps per Interval Across All of the Days", out.width='100%'}
+```{r echo = TRUE, fig.cap="Time series plot: Mean of Steps per Interval Across All of the Days", out.width='62%'}
 knitr::include_graphics("./images/plot2.png")
 
 ```
-
 
 What is the maximum measured interval mean?
 
@@ -155,7 +154,7 @@ dev.off
 
 ```
 
-```{r echo = TRUE, fig.cap="Histogram: Adjusted Total Number of Steps Taken Each Day", out.width='100%'}
+```{r echo = TRUE, fig.cap="Histogram: Adjusted Total Number of Steps Taken Each Day", out.width='62%'}
 knitr::include_graphics("./images/plot3.png")
 
 ```
@@ -231,7 +230,7 @@ plot(aggregate(steps ~ interval, data = raw3[raw3$day == "weekday",], mean), typ
 dev.off()
 ```
 
-```{r echo = TRUE, fig.cap="Time Series: Mean Steps for Weekday Intervals", out.width='100%'}
+```{r echo = TRUE, fig.cap="Time Series: Mean Steps for Weekday Intervals", out.width='62%'}
 knitr::include_graphics("./images/plot4.png")
 
 ```
@@ -244,7 +243,7 @@ plot(aggregate(steps ~ interval, data = raw3[raw3$day == "weekend",], mean), typ
 dev.off()
 ```
 
-```{r echo = TRUE, fig.cap="Time Series: Mean Steps for Weekend Intervals", out.width='100%'}
+```{r echo = TRUE, fig.cap="Time Series: Mean Steps for Weekend Intervals", out.width='62%'}
 knitr::include_graphics("./images/plot5.png")
 
 ```
@@ -259,6 +258,6 @@ library(yaml)
 
 Used this command: render("~/DataScience/coursera/Assignments/Reproducible_Research/PA1_template.Rmd")
 
-knitr did not like my version of markdown and suggested the use of render().
+knitr did not like this version of markdown files and suggested the use of render().
 
 ---End of file---
