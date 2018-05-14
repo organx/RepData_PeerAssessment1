@@ -4,6 +4,7 @@ Johns Hopkins University, Bloomberg School of Public Health"
 author: "(c) 2018, Ted Herring, All Rights Reserved"
 date: "May 13, 2018"
 output: html_document
+        
 ---
 
 ```{r setup, include=FALSE}
@@ -41,7 +42,16 @@ total.daily.steps <- tapply(raw$steps, raw$date, sum, na.rm = TRUE)
 
 #### Make a histogram of the total number of steps taken each day.
 ```{r echo = TRUE}
+png("plot1.png")
 hist(total.daily.steps)
+dev.off()
+
+```
+
+
+```{r echo = TRUE, fig.cap="Histogram: Total Number of Steps Taken Each Day", out.width='100%'}
+knitr::include_graphics("./images/plot1.png")
+
 ```
 
 #### Calculate and report the mean and median of the total number of steps taken per day.
@@ -66,7 +76,14 @@ median.daily.steps
 Restating the question: calculate the mean of the steps subsetted for interval across all of the days.
 ```{r echo = TRUE}
 daily.pattern <- aggregate(steps ~ interval, data = raw, FUN = mean, na.action = na.omit)
+png("plot2.png")
 plot(daily.pattern, type = "l")
+dev.off()
+```
+
+```{r echo = TRUE, fig.cap="Time series plot: Mean of Steps per Interval Across All of the Days", out.width='100%'}
+knitr::include_graphics("./images/plot2.png")
+
 ```
 
 What is the maximum measured interval mean?
@@ -131,7 +148,14 @@ total.daily.steps2 <- tapply(raw2$steps, raw2$date, sum)
 
 ##### Make a histogram of the total number of steps taken each day.
 ```{r ECHO = TRUE}
+png("plot3.png")
 hist(total.daily.steps2)
+dev.off
+
+```
+
+```{r echo = TRUE, fig.cap="Histogram: Adjusted Total Number of Steps Taken Each Day", out.width='100%'}
+knitr::include_graphics("./images/plot3.png")
 
 ```
 
@@ -201,15 +225,39 @@ for (i in 1:fac.length){
 Mean steps for weekday intervals
 ```{r echo = TRUE}
 # aggregate(steps ~ interval, data = raw3[raw3$day == "weekday",], mean)
+png("plot4.png")
 plot(aggregate(steps ~ interval, data = raw3[raw3$day == "weekday",], mean), type = "l")
+dev.off()
+```
+
+```{r echo = TRUE, fig.cap="Time Series: Mean Steps for Weekday Intervals", out.width='100%'}
+knitr::include_graphics("./images/plot4.png")
 
 ```
 
 Mean steps for weekend intervals
 ```{r echo = TRUE}
 # aggregate(steps ~ interval, data = raw3[raw3$day == "weekend",], mean)
+png("plot5.png")
 plot(aggregate(steps ~ interval, data = raw3[raw3$day == "weekend",], mean), type = "l")
+dev.off()
+```
+
+```{r echo = TRUE, fig.cap="Time Series: Mean Steps for Weekend Intervals", out.width='100%'}
+knitr::include_graphics("./images/plot5.png")
 
 ```
 
+Render the file.
+```{r}
+library(knitr)
+library(rmarkdown)
+library(yaml)
 
+```
+
+Used this command: render("~/DataScience/coursera/Assignments/Reproducible_Research/PA1_template.Rmd")
+
+knitr did not like my version of markdown and suggested the use of render().
+
+---End of file---
