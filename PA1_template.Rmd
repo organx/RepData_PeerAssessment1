@@ -85,7 +85,7 @@ dev.off()
 knitr::include_graphics("./images/plot2.png")
 
 ```
-! [] (./images/plot1.png)
+! [] (images/plot1.png)
 
 What is the maximum measured interval mean?
 
