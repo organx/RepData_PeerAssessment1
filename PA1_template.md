@@ -450,3 +450,4 @@ Render the file.
     library(knitr)
     library(rmarkdown)
     library(yaml)
+render("~/DataScience/coursera/Assignments/Reproducible_Research/PA1_template.Rmd")
