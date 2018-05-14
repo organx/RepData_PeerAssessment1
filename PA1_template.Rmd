@@ -1,25 +1,215 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "Reproducible Research: Peer Assessed Course Project #1,
+Johns Hopkins University, Bloomberg School of Public Health"
+author: "(c) 2018, Ted Herring, All Rights Reserved"
+date: "May 13, 2018"
+output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## Loading and preprocessing the data
 
+### Read in the data to the dataset
+#### Set the working directory variables.
+Note: Set working.directory and short.path.to.file to whatever you need to run this script.
+```{r echo = TRUE}
+working.directory <- "~/DataScience/coursera/Assignments/Reproducible_Research"
+short.path.to.file <- "./repdata_data_activity/activity.csv"
+```
 
+#### Set the working directory
+```{r echo = TRUE}
+setwd(working.directory)
+
+```
+
+#### Read the data table into variable: raw
+```{r echo = TRUE}
+raw <- read.csv(short.path.to.file)
+```
 
 ## What is mean total number of steps taken per day?
+#### Subset the sum of the steps by date.
+For this part of the assignment, you can ignore the missing values in the dataset.
 
+```{r echo = TRUE}
+total.daily.steps <- tapply(raw$steps, raw$date, sum, na.rm = TRUE)
+```
 
+#### Make a histogram of the total number of steps taken each day.
+```{r echo = TRUE}
+hist(total.daily.steps)
+```
+
+#### Calculate and report the mean and median of the total number of steps taken per day.
+
+Mean and median number of steps taken per day.
+```{r echo = TRUE}
+mean.daily.steps <- aggregate(steps ~ date, data = raw, FUN = mean, na.action = na.omit)
+median.daily.steps <- aggregate(steps ~ date, data = raw, FUN = median, na.rm = TRUE)
+
+```
+#### Mean of steps  taken each day are in the vector: mean.daily.steps
+```{r echo = TRUE}
+mean.daily.steps
+```
+
+#### Median of daily steps are in the vector: median.daily.steps
+```{r echo = TRUE}
+median.daily.steps
+```
 
 ## What is the average daily activity pattern?
+Restating the question: calculate the mean of the steps subsetted for interval across all of the days.
+```{r echo = TRUE}
+daily.pattern <- aggregate(steps ~ interval, data = raw, FUN = mean, na.action = na.omit)
+plot(daily.pattern, type = "l")
+```
+
+What is the maximum measured interval mean?
+
+```{r echo = TRUE}
+max.dp <- max(daily.pattern$steps)
+daily.pattern[daily.pattern$steps == max.dp,]
+
+```
+
+Answer: Interval # 835 contains the maximum number of mean steps: 206.1698 steps.
 
 
 
 ## Imputing missing values
+### Calculate and report the number of missing values.
+```{r echo = TRUE}
+length(raw$steps[is.na(raw$steps)])
 
+```
+
+Answer: There are 2304 missing values.
+
+### Now actually fill in the missing values and create a dataset without NAs to find the daily mean. Here the mean of the daily interval will be used.
+
+NAs were omitted to calculate the mean earlier to create the vector: daily.pattern
+Create a new vector using the daily pattern of interval means to substitute the NAs for each day.
+
+#### About the script
+* Read each line of the data table
+* If the steps column is NA value then read the interval for that line.
+* Look up that interval in the table and store it in x: daily.pattern
+* In the data set, exchange NA for x
+* continue the actions throughout the dataset
+
+```{r echo = TRUE}
+raw2 <- raw
+i <- numeric()
+j <- numeric(1)
+interval <- numeric(1)
+x.interval <- numeric(1)
+j <- length(raw2$steps)
+
+for (i in 1:j){
+        if (is.na(raw2$steps[i]) == TRUE) {
+                interval <- raw2[i, 3]
+                x.interval <- daily.pattern[daily.pattern$interval == interval,2]
+                raw2[i,1] <- x.interval
+        }
+}
+
+```
+
+#### Now the data obtained will be used to answer the questions as put forth.
+##### What is the mean total number of steps taken per day?
+##### This time the NAs have been substituted with the corresponding interval means.
+```{r echo = TRUE}
+total.daily.steps2 <- tapply(raw2$steps, raw2$date, sum)
+
+```
+
+
+##### Make a histogram of the total number of steps taken each day.
+```{r ECHO = TRUE}
+hist(total.daily.steps2)
+
+```
+
+##### The question requests a calculation for mean and median number of steps taken per day.
+```{r echo = TRUE}
+mean.daily.steps2 <- aggregate(steps ~ date, data = raw2, FUN = mean)
+median.daily.steps2 <- aggregate(steps ~ date, data = raw2, FUN = median)
+
+```
+
+##### The corrected mean number of steps taken per day.
+```{r echo = TRUE}
+print(mean.daily.steps2)
+
+```
+
+##### The corrected median number of steps taken per day.
+```{r echo = TRUE}
+print(median.daily.steps2)
+
+```
+
+Do these values differ from the estimates from the first part of the assignment?
+Yes, the new values display more of a central tendency that is less skewed toward zero. Also, there are fewer medians of zero.
+
+What is the impact of imputting missing data on the estimates of the total daily number of steps?
+This seems simple to answer. It is tough to add data points without affecting accuracy of the method. It is difficult to say unless one knows the reason for the NA values. In this case, after a cursory scan of the data, it appears that most of the NA values occurred early in the dataset. Replacing the NA values with the means may make the data look prettier; however, it may create error in measurement, prediction or estimation. On the other hand, there may be a advantage to substituting the NAs especially if the daily pattern is very regular. In short, the impact of imputting missing data can be to introduce error or reduce error or have no effect. Perhaps there is a higer probability of introducing error by adding data. On the other hand, with limited data resoloution there may be advantages to filling in the gaps to smooth the curve. In the best case scenario with unlimited funding an inquiry into the cause of the NAs would be a reasonable solution. Also, a repeat of the experiment may be warranted.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+To answer this questin a new column 'day' will be added to a forked data frame to contain the factor of two levels: "Weekday","Weekend"
+
+Create a dataset fork named 'raw3'.
+```{r echo = TRUE}
+raw3 <- raw2
+
+```
+
+Initialize the variables.
+```{r}
+i <- numeric(1)
+fac.length <- numeric(1)
+day.check <- character(1)
+
+```
+
+Create a new empty variable/column named 'day' within the forked dataset.
+```{r echo = TRUE}
+fac.length <- length(raw3$steps)
+raw3$day <- factor(fac.length, levels = c("weekday", "weekend"))
+
+```
+
+Search and select for day type and enter the result into the new column.
+```{r echo = TRUE}
+for (i in 1:fac.length){
+        day.check <- weekdays(strptime(raw3[i, 2], format = "%Y-%m-%d"))
+        if (day.check == "Saturday" | day.check == "Sunday"){
+                raw3[i, 4] <- "weekend"} else {raw3[i, 4] <- "weekday"}
+}
+
+```
+
+
+##### The means will be calculated and plotted using the table 'raw3'.
+
+Mean steps for weekday intervals
+```{r echo = TRUE}
+# aggregate(steps ~ interval, data = raw3[raw3$day == "weekday",], mean)
+plot(aggregate(steps ~ interval, data = raw3[raw3$day == "weekday",], mean), type = "l")
+
+```
+
+Mean steps for weekend intervals
+```{r echo = TRUE}
+# aggregate(steps ~ interval, data = raw3[raw3$day == "weekend",], mean)
+plot(aggregate(steps ~ interval, data = raw3[raw3$day == "weekend",], mean), type = "l")
+
+```
+
+
