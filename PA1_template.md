@@ -31,9 +31,19 @@ the dataset.
 
 #### Make a histogram of the total number of steps taken each day.
 
+    png("plot1.png")
     hist(total.daily.steps)
+    dev.off()
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+    ## png 
+    ##   2
+
+    knitr::include_graphics("./images/plot1.png")
+
+<img src="./images/plot1.png" alt="Histogram: Total Number of Steps Taken Each Day" width="62%" />
+<p class="caption">
+Histogram: Total Number of Steps Taken Each Day
+</p>
 
 #### Calculate and report the mean and median of the total number of steps taken per day.
 
@@ -167,9 +177,19 @@ Restating the question: calculate the mean of the steps subsetted for
 interval across all of the days.
 
     daily.pattern <- aggregate(steps ~ interval, data = raw, FUN = mean, na.action = na.omit)
+    png("plot2.png")
     plot(daily.pattern, type = "l")
+    dev.off()
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-9-1.png)
+    ## png 
+    ##   2
+
+    knitr::include_graphics("./images/plot2.png")
+
+<img src="./images/plot2.png" alt="Time series plot: Mean of Steps per Interval Across All of the Days" width="62%" />
+<p class="caption">
+Time series plot: Mean of Steps per Interval Across All of the Days
+</p>
 
 What is the maximum measured interval mean?
 
@@ -235,9 +255,26 @@ means to substitute the NAs for each day.
 
 ##### Make a histogram of the total number of steps taken each day.
 
+    png("plot3.png")
     hist(total.daily.steps2)
+    dev.off
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-14-1.png)
+    ## function (which = dev.cur()) 
+    ## {
+    ##     if (which == 1) 
+    ##         stop("cannot shut down device 1 (the null device)")
+    ##     .External(C_devoff, as.integer(which))
+    ##     dev.cur()
+    ## }
+    ## <bytecode: 0x05b07df0>
+    ## <environment: namespace:grDevices>
+
+    knitr::include_graphics("./images/plot3.png")
+
+<img src="./images/plot3.png" alt="Histogram: Adjusted Total Number of Steps Taken Each Day" width="62%" />
+<p class="caption">
+Histogram: Adjusted Total Number of Steps Taken Each Day
+</p>
 
 ##### The question requests a calculation for mean and median number of steps taken per day.
 
@@ -434,20 +471,47 @@ Search and select for day type and enter the result into the new column.
 Mean steps for weekday intervals
 
     # aggregate(steps ~ interval, data = raw3[raw3$day == "weekday",], mean)
+    png("plot4.png")
     plot(aggregate(steps ~ interval, data = raw3[raw3$day == "weekday",], mean), type = "l")
+    dev.off()
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-22-1.png)
+    ## png 
+    ##   2
+
+    knitr::include_graphics("./images/plot4.png")
+
+<img src="./images/plot4.png" alt="Time Series: Mean Steps for Weekday Intervals" width="62%" />
+<p class="caption">
+Time Series: Mean Steps for Weekday Intervals
+</p>
 
 Mean steps for weekend intervals
 
     # aggregate(steps ~ interval, data = raw3[raw3$day == "weekend",], mean)
+    png("plot5.png")
     plot(aggregate(steps ~ interval, data = raw3[raw3$day == "weekend",], mean), type = "l")
+    dev.off()
 
-![](PA1_template_files/figure-markdown_strict/unnamed-chunk-23-1.png)
+    ## png 
+    ##   2
+
+    knitr::include_graphics("./images/plot5.png")
+
+<img src="./images/plot5.png" alt="Time Series: Mean Steps for Weekend Intervals" width="62%" />
+<p class="caption">
+Time Series: Mean Steps for Weekend Intervals
+</p>
 
 Render the file.
 
     library(knitr)
     library(rmarkdown)
     library(yaml)
-render("~/DataScience/coursera/Assignments/Reproducible_Research/PA1_template.Rmd")
+
+Used this command:
+render("~/DataScience/coursera/Assignments/Reproducible\_Research/PA1\_template.Rmd")
+
+knitr did not like this version of markdown files and suggested the use
+of render().
+
+---End of file---
