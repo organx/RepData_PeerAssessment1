@@ -50,10 +50,10 @@ dev.off()
 
 
 ```{r echo = TRUE, fig.cap="Histogram: Total Number of Steps Taken Each Day", out.width='100%'}
-knitr::include_graphics("./images/plot1.png")
+knitr::include_graphics("https://github.com/organx/RepData_PeerAssessment1/tree/master/images/plot1.png")
 
 ```
-
+! [] (https://github.com/organx/RepData_PeerAssessment1/tree/master/images/plot1)
 #### Calculate and report the mean and median of the total number of steps taken per day.
 
 Mean and median number of steps taken per day.
